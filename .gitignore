@@ -91,8 +91,8 @@ ipython_config.py
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+
+
 
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
@@ -157,4 +157,137 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+
+import random
+
+# initialize the board
+
+board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+
+# print the board
+
+def print_board():
+
+    print(" " + board[0] + " | " + board[1] + " | " + board[2] + " ")
+
+    print("---+---+---")
+
+    print(" " + board[3] + " | " + board[4] + " | " + board[5] + " ")
+
+    print("---+---+---")
+
+    print(" " + board[6] + " | " + board[7] + " | " + board[8] + " ")
+
+# check if the game is over
+
+def check_game_over():
+
+    # check rows
+
+    for i in range(0, 9, 3):
+
+        if board[i] == board[i+1] and board[i] == board[i+2] and board[i] != " ":
+
+            return board[i] + " wins!"
+
+    # check columns
+
+    for i in range(0, 3):
+
+        if board[i] == board[i+3] and board[i] == board[i+6] and board[i] != " ":
+
+            return board[i] + " wins!"
+
+    # check diagonals
+
+    if board[0] == board[4] and board[0] == board[8] and board[0] != " ":
+
+        return board[0] + " wins!"
+
+    if board[2] == board[4] and board[2] == board[6] and board[2] != " ":
+
+        return board[2] + " wins!"
+
+    # check if there are empty squares
+
+    if " " not in board:
+
+        return "Tie!"
+
+    # game continues
+
+    return "continue"
+
+# computer's move
+
+def computer_move():
+
+    # choose a random square
+
+    square = random.randint(0, 8)
+
+    # check if the square is already occupied
+
+    while board[square] != " ":
+
+        square = random.randint(0, 8)
+
+    # mark the square
+
+    board[square] = "X"
+
+# initialize the board
+
+board[4] = "X"
+
+# main loop
+
+while True:
+
+    print_board()
+
+    # user's move
+
+    user_move = int(input("Enter your move (1-9): ")) - 1
+
+    # check if the square is already occupied
+
+    while board[user_move] != " ":
+
+        print("This square is already occupied!")
+
+        user_move = int(input("Enter your move (1-9): ")) - 1
+
+    # mark the square
+
+    board[user_move] = "O"
+
+    # check if the game is over
+
+    result = check_game_over()
+
+    if result != "continue":
+
+        print_board()
+
+        print(result)
+
+        break
+
+    # computer's move
+
+    computer_move()
+
+    # check if the game is over
+
+    result = check_game_over()
+
+    if result != "continue":
+
+        print_board()
+
+        print(result)
+
+        break
+
+
